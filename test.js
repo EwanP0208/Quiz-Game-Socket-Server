@@ -1,8 +1,9 @@
-const TriviaAPI = require("./lib/api/trivia");
+const QuestionManager = require("./lib/questions/questionManager");
 
-async function getData() {
-    const data = await TriviaAPI.questions('random');
-    console.log(data);
+async function getQuestions() {
+    const randomQuestions = await QuestionManager.getRandomQuestions();
+
+    console.log(randomQuestions);
 }
 
-getData();
+getQuestions();
