@@ -1,16 +1,11 @@
-const RoomManager = require("./lib/rooms/roomManager.js");
+
 
 
 const { port } = require("./config.js")
 const { Server } = require("socket.io");
 
 const io = new Server(port, {});
-
 const registerRoomHandlers = require("./handlers/roomHandler.js");
-
-RoomManager.createRoom();
-console.log(RoomManager.rooms);
-
 
 io.on("connection", (socket) => {
     registerRoomHandlers(io, socket);
