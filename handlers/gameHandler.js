@@ -8,7 +8,7 @@ module.exports = (io, socket) => {
 
         // Check if all clients are ready, if they are then we're going to start the game
         if (GameState.allClientsReady()) {
-            io.to(roomCode).emit("game:start");
+            io.to(roomCode).emit("game:start", GameState.getQuestionSet());
         }
     }
 
