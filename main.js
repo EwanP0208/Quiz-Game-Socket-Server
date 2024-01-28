@@ -1,30 +1,22 @@
-
-
-
 const { port } = require("./config.js")
 const { Server } = require("socket.io");
 
-const io = new Server(port, {});
+const RoomManager = require("./lib/roomManager.js");
+
+const io = new Server(port, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
+
 const registerRoomHandlers = require("./handlers/roomHandler.js");
+const registerGameHandlers = require("./handlers/gameHandler.js");
 
 io.on("connection", (socket) => {
     registerRoomHandlers(io, socket);
+    registerGameHandlers(io, socket);
 
-    console.log("user has connected");
-})
-
-// Communications from client to server
-// Create a room
-// Join a room
-// Ready up
-// Category selected
-// Question answered
-// Quiz complete
-
-// Communications from server to client
-// All players ready
-// All categories selected and game starting
-// Question set to answer
-// Status of other players (questions answered so far)
-// Final results
-// Game closure
+    socket.on("rooms", () => {
+        console.log(RoomManager.roomStates);
+    })
+});
